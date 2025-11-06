@@ -193,7 +193,7 @@ class Medicamento {
 
             const queryInsertClient: string = `INSERT INTO Medicamento (nome_Medicamento,fabricante,data_validade,principio_ativo,preco)
             VALUES ($1,$2,$3,$4,$5)
-            RETURNING id_Medicamento;`;
+            RETURNING id_medicamento;`;
 
             const respostaBD = await database.query(queryInsertClient,[
                 Medicamento.nome_medicamento.toUpperCase(),
@@ -216,14 +216,15 @@ class Medicamento {
         }
     }
 
-    static async listarMedicamento(id_Medicamento: number): Promise<Medicamento | null>{
+    static async listarMedicamento(Nome_Medicamento: string): Promise<Medicamento | null>{
 
         try{
-        const querySelectMedicamentos = `SELECT * FROM Medicamento WHERE id_Medicamentos = $1;`;
-        const respostaBD = await database.query(querySelectMedicamentos, [id_Medicamento]);
+        const querySelectMedicamentos = `SELECT * FROM medicamento WHERE nome_medicamento LIKE '${Nome_Medicamento}';`;
+        const respostaBD = await database.query(querySelectMedicamentos, [Nome_Medicamento]);
 
         if(respostaBD.rowCount != 0){
             const medicamento : Medicamento = new Medicamento(
+
                 respostaBD.rows[0].nome_Medicamento,
                 respostaBD.rows[0].fabricante,
                 respostaBD.rows[0].data_validade,

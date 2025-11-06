@@ -21,7 +21,8 @@ router.post("/api/cliente", ClienteController.novo);
 
 router.get("/api/clientes/:idCliente", ClienteController.cliente);
 
-router.get("/api/clientes/:idMedicamento", MedicamentoController.medicamento);
+router.get("/api/medicamento/:nome", MedicamentoController.medicamento);
+router.get("/api/clientes/:principio", MedicamentoController.medicamento);
 
 router.get("/api/medicamento", MedicamentoController.todos);
 

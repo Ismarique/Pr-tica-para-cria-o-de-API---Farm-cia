@@ -76,17 +76,17 @@ class MedicamentoController extends Medicamento {
 
     static async medicamento(req: Request, res: Response): Promise<Response>{
         try{
-            const idMedicamento: number = parseInt (req.params.idMedicamento as string);
+            const nome_Medicamento: string = req.params.nome as string;
 
             //validação simples
-            if (isNaN(idMedicamento) || idMedicamento <= 0){
-                return res.status(400).json({mensagem: "ID inválido."});            
+            if (nome_Medicamento == "" || nome_Medicamento == null){
+                return res.status(400).json({mensagem: "nome inválido."});            
             } 
 
-            const respostaModelo = await Medicamento.listarMedicamento(idMedicamento);
+            const respostaModelo = await Medicamento.listarMedicamento(nome_Medicamento);
 
               if (respostaModelo === null) {
-                return res.status(200).json({ mensagem: "Nenhum medicamento encontrado com o ID fornecido." });
+                return res.status(200).json({ mensagem: "Nenhum medicamento encontrado com o nome fornecido." });
             }
             return res.status(400).json(respostaModelo);
         }catch(error){
